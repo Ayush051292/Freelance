@@ -1,0 +1,189 @@
+{% extends 'master.html' %}
+{% block content %}
+
+
+<section>
+  <div class="card">
+    <div class="card-header">
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Edit Currency Details</h4>
+        </div>
+        <div class="col-md-4"></div>
+
+      </div>
+      <div class="card-body">
+        <form method="POST">
+          {% csrf_token %}
+          <div class="row">
+
+            <div class="col-md-6">
+              <div class="card-body">
+                <div class='form-group'>
+                  <label>Currency:</label>
+                  <input type="text" name="currency" class="form-control" value="{{ currencies.currency }}" required>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card-body">
+                  <div class='form-group'>
+                    <label>Rate in INR:</label>
+                    <input type="number" name="rate" step="any" class="form-control" value="{{ currencies.rate }}" required>
+                  </div>
+                </div>
+
+            </div>
+
+
+
+          </div>
+
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+          </div>
+        </form>
+
+
+
+
+      </div>
+    </div>
+   
+    {% for message in messages %}
+
+{% if 'success' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': true,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '3000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.success('Data Submitted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+
+        {% elif 'error' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.error('Data Deleted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+          
+         {% elif 'info' == message.tags %}
+
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.info('Data Updated Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+        {% endif %}
+  
+        {% endfor %}
+        
+</section>
+{% endblock %}

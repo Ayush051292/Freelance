@@ -1,0 +1,497 @@
+{% extends 'reportpage.html' %}
+{% block content %}
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+
+<section>
+  <div class="card">
+    <div class="card-header">
+                       
+          
+          <div class="row">
+        <div class="col-md-4"> <h4>Job Details</h4></div>
+              <div class="col-md-4"></div>
+              <div class="col-md-4 text-right">
+                  <a class="btn btn-primary btn-sm"  role="button" data-toggle="modal" data-target="#exampleModal3" style="color:white">+ Add New</a>
+
+              </div>
+
+          </div>
+    <div class="card-body">
+      <table id="example" class="display" style="width:100%">
+                                
+        <thead>
+          <tr>
+            <th style="text-align:center">SL No.</th>
+            <th style="text-align:center">CRM</th>
+            <th style="text-align:center">Job ID</th>
+            <th style="text-align:center">Words</th>
+            <th style="text-align:center">Currency</th>
+            <th style="text-align:center">PPW</th>
+            <th style="text-align:center">Value (INR)</th>
+            <th style="text-align:center">Value</th>
+            <th style="text-align:center">Participant</th>
+            <th style="text-align:center">Action</th>
+
+    
+        
+          </tr>
+        </thead>
+        <tbody style="text-align: center;">
+          {% for jobdet in jobdetails %}
+          <tr>
+            <td style="text-align:center">{{ forloop.counter }}</td>
+            <td style="text-align:center">{{ jobdet.crm }}</td>
+            <td style="text-align:center">{{ jobdet.job_id }}</td>
+            <td style="text-align:center">{{ jobdet.words }}</td>
+            <td style="text-align:center">{{ jobdet.currency }}</td>
+            <td style="text-align:center">{{ jobdet.ppw }}</td>
+            <td style="text-align:center">{{ jobdet.value_inr }}</td>
+            <td style="text-align:center">{{ jobdet.value }}</td>
+            <td style="text-align:center">{{ jobdet.participant }}</td>
+            <td style="text-align:center">
+              
+              <form action="/job_delete/{{ jobdet.id }}" method="POST">
+                {% csrf_token %}
+                <a href="/job_update/{{ jobdet.id }}" class="btn btn-primary btn-sm"  role="button" data-toggle="modal" data-target="#editmodal{{ jobdet.id }}" style="color:white" onclick="func1(this.id)"> <i class="fa fa-edit" style="color:white;"></i></a>
+                <button type="submit" class="btn btn-danger  btn-sm show_confirm" data-toggle="tooltip" title='Delete'> <i class="fa fa-trash" style="color:white;"></i></button>
+            </form>
+          </td>
+
+    
+          </tr>
+    
+          <div class="modal fade" id="editmodal{{ jobdet.id }}" tabindex="-1" role="dialog" aria-labelledby="editmodalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-slideout modal-md" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editmodalLabel">Edit Job Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+        
+                    <div class="card-body">
+                      <form method = "POST" action="/job_update/{{ jobdet.id }}">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="row">
+                            <div class="col-md-6">
+                              <div  class='form-group'>
+                                <label>CRM</label>
+                                <input type="text" name="crm" class="form-control" value="{{ jobdet.crm }}" placeholder="Enter CRM Name" required>
+
+                                
+                               </div>
+                          
+            
+                               <div  class='form-group'>
+                                <label>JOB ID</label>
+                                <input type="text" name="job_id" class="form-control" value="{{ jobdet.job_id }}" placeholder="Enter Job ID">
+                               </div>
+            
+                               
+                               <div  class='form-group'>
+                                <label>Words</label>
+                                <input type="text" name="words" class="form-control" value="{{ jobdet.words }}" placeholder="Enter Words" id="words1" oninput="myFunction1()">
+                               </div>
+            
+
+                                     
+                               <div  class='form-group'>
+                                <label>value</label>
+                                <input type="text" name="value" class="form-control" value="{{ jobdet.value }}" placeholder="Enter Value">
+                               </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                              <div  class='form-group'>
+                                <label> PPW</label>
+                                <input type="text" name="ppw" class="form-control" value="{{ jobdet.ppw }}" placeholder="Enter PPW" step="any" id="ppw1" oninput="myFunction1()">
+
+                              </div> 
+                             
+                                 
+                              <div  class='form-group'>
+                                <label>Currency</label>
+
+                                <select name="currency" style="width: 100%">
+                                    <option value="{{ jobdet.currency }}">{{ jobdet.currency }}</option>
+                  
+                                  
+                                    {% for item in currencies  %}
+                                    <option value="{{ item.currency }}">{{ item.currency }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+            
+                               <div  class='form-group'>
+                                <label>value (INR)</label>
+                                <input type="text" name="value_inr" class="form-control" value="{{ jobdet.value_inr }}" placeholder="Enter Value (INR)" id="value_inr1" oninput="myFunction1()" style="background-color: transperant;">
+                               </div>
+            
+                               <div  class='form-group'>
+                                <label>Participant</label>
+                                <input type="text" name="participant" class="form-control" value="{{ jobdet.participant }}" placeholder="Enter participant">
+                               </div>
+            
+            
+                            </div>
+                             
+                      
+                                  <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                                      <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                                </div>
+                          </div>
+                      </form>
+                      </div>
+                    
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+      
+        {% endfor %}
+        </tbody>
+       </table>
+    
+       <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-slideout" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLabel"><label>ADD NEW DATA</label>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" style="font-size:18px">×</span>
+              </button>
+            </h4>
+            </div>
+            <div class="modal-body">
+          
+            <div class="card-body">
+              <form method="POST">
+                {% csrf_token %}
+                  
+                <div class="row">
+                <div class="col-md-6">
+                  <div  class='form-group'>
+                    <label class="floating-label">CRM</label><br>
+                    <input type="text" class="form-control inputText" name="crm" />
+                   </div>
+              
+
+                   <div  class='form-group'>
+                    <label class="floating-label">JOB ID</label><br>
+                    <input type="text" class="form-control inputText" name="job_id" />
+
+
+                   </div>
+
+                   
+                   <div  class='form-group'>
+                    <label class="floating-label">Words</label><br>
+                    <input type="text" class="form-control inputText" name="words" id="words" oninput="myFunction()" />
+
+
+                   </div>
+
+
+                 
+
+                   <div  class='form-group'>
+                    <label class="floating-label">Value</label><br>
+                    <input type="text" class="form-control inputText" name="value" />
+
+
+                   </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div  class='form-group'>                 
+                    <label class="floating-label">PPW</label><br>
+                    <input type="text" class="form-control inputText" name="ppw" step="any"  id="ppw" oninput="myFunction()" />
+
+                  </div> 
+                 
+                     
+                  <div  class='form-group'>
+                    <label>Currency</label>
+
+                    
+                 <select name="currency" style="width: 100%">
+                        <option>---Select Please---</option>
+        
+                        
+                        {% for curr in currencies  %}
+                        <option value="{{ curr.currency }}">{{ curr.currency }}</option>
+                        {% endfor %}
+                    </select> 
+
+                  
+                   </div>
+
+                   <div class='form-group'>
+                    <label class="floating-label">Value (INR)</label><br>
+                    <input type="text" class="form-control inputText" name="value_inr" id="value_inr" readonly style="background-color:transperant;">
+
+
+                   </div>
+
+                   <div  class='form-group'>
+                    <label class="floating-label">Participant</label><br>
+                    <input type="text" name="participant" class="form-control inputText" />
+
+                    
+                   </div>
+
+
+                </div>
+
+        
+                
+                 
+          
+                      <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                        <br>
+                          <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                    </div>
+              </div>
+              </form>
+              </div>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  
+
+</div>
+</div>
+
+
+{% for message in messages %}
+
+{% if 'success' == message.tags %}
+<script type="text/javascript">
+  // Default Configuration
+      $(document).ready(function() {
+          toastr.options = {
+              'closeButton': true,
+              'debug': false,
+              'newestOnTop': false,
+              'progressBar': true,
+              'positionClass': 'toast-top-right',
+              'preventDuplicates': false,
+              'showDuration': '1000',
+              'hideDuration': '1000',
+              'timeOut': '5000',
+              'extendedTimeOut': '1000',
+              'showEasing': 'swing',
+              'hideEasing': 'linear',
+              'showMethod': 'fadeIn',
+              'hideMethod': 'fadeOut',
+          }
+      });
+
+  // Toast Type
+   
+          toastr.success('Data Submitted Successfully');
+     
+  // Toast Image and Progress Bar
+      $('#image').click(function(event) {
+          toastr.options.progressBar = true,
+          toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+      });
+
+
+  // Toast Position
+      $('#position').click(function(event) {
+          var pos = $('input[name=position]:checked', '#positionForm').val();
+          toastr.options.positionClass = "toast-" + pos;
+          toastr.options.preventDuplicates = false;
+          toastr.info('This sample position', 'Toast Position')
+      });
+  </script>
+
+{% elif 'error' == message.tags %}
+<script type="text/javascript">
+  // Default Configuration
+      $(document).ready(function() {
+          toastr.options = {
+              'closeButton': true,
+              'debug': false,
+              'newestOnTop': false,
+              'progressBar': false,
+              'positionClass': 'toast-top-right',
+              'preventDuplicates': false,
+              'showDuration': '1000',
+              'hideDuration': '1000',
+              'timeOut': '5000',
+              'extendedTimeOut': '1000',
+              'showEasing': 'swing',
+              'hideEasing': 'linear',
+              'showMethod': 'fadeIn',
+              'hideMethod': 'fadeOut',
+          }
+      });
+
+  // Toast Type
+   
+          toastr.error('Data Deleted Successfully');
+     
+  // Toast Image and Progress Bar
+      $('#image').click(function(event) {
+          toastr.options.progressBar = true,
+          toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+      });
+
+
+  // Toast Position
+      $('#position').click(function(event) {
+          var pos = $('input[name=position]:checked', '#positionForm').val();
+          toastr.options.positionClass = "toast-" + pos;
+          toastr.options.preventDuplicates = false;
+          toastr.info('This sample position', 'Toast Position')
+      });
+  </script>
+
+ {% elif 'info' == message.tags %}
+
+<script type="text/javascript">
+  // Default Configuration
+      $(document).ready(function() {
+          toastr.options = {
+              'closeButton': true,
+              'debug': false,
+              'newestOnTop': false,
+              'progressBar': false,
+              'positionClass': 'toast-top-right',
+              'preventDuplicates': false,
+              'showDuration': '1000',
+              'hideDuration': '1000',
+              'timeOut': '5000',
+              'extendedTimeOut': '1000',
+              'showEasing': 'swing',
+              'hideEasing': 'linear',
+              'showMethod': 'fadeIn',
+              'hideMethod': 'fadeOut',
+          }
+      });
+
+  // Toast Type
+   
+          toastr.info('Data Updated Successfully');
+     
+  // Toast Image and Progress Bar
+      $('#image').click(function(event) {
+          toastr.options.progressBar = true,
+          toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+      });
+
+
+  // Toast Position
+      $('#position').click(function(event) {
+          var pos = $('input[name=position]:checked', '#positionForm').val();
+          toastr.options.positionClass = "toast-" + pos;
+          toastr.options.preventDuplicates = false;
+          toastr.info('This sample position', 'Toast Position')
+      });
+  </script>
+{% endif %}
+
+{% endfor %}
+
+<script>
+	$(function(){
+	$('#country').select2({
+	dropdownParent: $('#editmodal')
+	});
+}); 
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<script type="text/javascript">
+ 
+     $('.show_confirm').click(function(event) {
+          var form =  $(this).closest("form");
+          var name = $(this).data("name");
+          event.preventDefault();
+          swal({
+              title: `Are you sure you want to delete this record?`,
+              text: "If you delete this, it will be gone forever.",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              form.submit();
+            }
+          });
+      });
+  
+</script>
+<script type="text/javascript">window.mytest = function() { var isValid = confirm('Are you sure ?');if (!isValid) { event.preventDefault();  alert("It wont delete. Yay!");}}</script>
+
+<script>
+    function myFunction() {
+      var words = document.getElementById("words").value;
+      var ppw = document.getElementById("ppw").value;
+
+
+      var value_inr = words * ppw;
+      
+
+      document.getElementById("value_inr").value = value_inr;
+    }
+    </script>
+
+<script>
+  function myFunction1() {
+    var words = document.getElementById("words1").value;
+    var ppw = document.getElementById("ppw1").value;
+
+
+    var value_inr = words * ppw;
+    
+
+    document.getElementById("value_inr1").value = value_inr;
+  }
+  </script>
+
+<script>
+  $("select").select2({
+    tags: "true",
+    // allowClear: true
+    dropdownParent:$('#exampleModal3'),
+  });
+  </script>
+
+<script>
+  function func1(x){
+    
+    $("select").select2({
+      tags: "true",
+      placeholder: "Select an option11",
+      allowClear: true,
+      dropdownParent: $('#editmodal'+x),
+      });
+
+  }
+
+
+
+</script>
+
+
+</section>
+  {% endblock %}

@@ -1,0 +1,546 @@
+{% extends 'master.html' %}
+{% block content %}
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+<section>
+  <div class="card">
+    <div class="card-header">
+                       
+          
+          <div class="row">
+        <div class="col-md-4"> <h4>CRM Details</h4></div>
+              <div class="col-md-4"></div>
+              <div class="col-md-4 text-right">
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal2">+ Add New</button>
+
+
+              </div>
+
+          </div>
+
+          <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-slideout" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="exampleModalLabel"><label>ADD NEW CRM</label>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" style="font-size:18px">×</span>
+                </button>
+              </h4>
+            </div>
+            <div class="modal-body">
+              <form method="POST" class="post-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <span class="floating-label">CRM Name<span style="color:red">*</span></span><br>
+                      <input type="text" class="form-control inputText" name="crm_name" />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <span class="floating-label">CRM Number</span><br>
+                      <input type="text" class="form-control inputText" name="crm_number" required />
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Country</label>
+                      <select name="country" style="width: 100%;" required>
+                        <option vaue="" selected disabled>---Select Country---</option>
+                        {% for dt5 in country %}
+                        <option value="{{dt5.id}}">{{dt5.country_name}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <label>Payment Mode<span style="color:red">*</span> </label>
+                        <select name="payment_mode" style="width: 100%;" required>
+                        <option vaue="" selected disabled>--Select Payment Modes--</option>
+                        {% for dt in payment_mode %}
+                        <option value="{{dt.id}}">{{dt.payment_mode}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <label>Payment Type: <span style="color:red">*</span> </label>
+                        <select style="width: 100%;" name="payment_type" required>
+                        <option vaue="" selected disabled>--Select Payment Types--</option>
+                        {% for dt1 in payment_type %}
+                        <option value="{{dt1.id}}">{{dt1.payment_type}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <label>Currency: <span style="color:red">*</span> </label>
+                        <select style="width: 100%;" name="currency" required>
+                        <option vaue="" selected disabled>--Select Currency--</option>
+                        {% for dt2 in currency %}
+                        <option value="{{dt2.id}}">{{dt2.currency}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <label>Company: <span style="color:red">*</span> </label>
+                        <select style="width: 100%;" name="company" required>
+                        <option vaue="" selected disabled>--Select Company--</option>
+                        {% for dt3 in company %}
+                        <option value="{{dt3.id}}">{{dt3.payroll}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <label>Payment To Bank: <span style="color:red">*</span> </label>
+                        <select style="width: 100%;" name="bank" required>
+                        <option vaue="" selected disabled>--Select Bank--</option>
+                        {% for dt4 in bank %}
+                        <option value="{{dt4.id}}">{{dt4.payment_to_bank}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <span class="floating-label">Mobile Number: <span style="color:red">*</span> </span>
+                        <input type="number" class="form-control inputText" name="mobile" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <span class="floating-label">Contact Email: <span style="color:red">*</span> </span>
+                        <input type="email" class="form-control inputText" name="contact_email" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <span class="floating-label">Invoice Email: <span style="color:red">*</span> </span>
+                        <input type="email" class="form-control inputText" name="inv_email" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <span class="floating-label">Per Word Rate (Mother): <span style="color:red">*</span> </span>
+                        <input type="number" step="any" class="form-control inputText" name="per_word_rate_mother" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <span class="floating-label">Per Word Rate (INR): <span style="color:red">*</span> </span>
+                        <input type="number" step="any" class="form-control inputText" name="per_word_rate_inr" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <span class="floating-label">Credit Limit: <span style="color:red">*</span> </span>
+                        <input type="number" step="any" class="form-control inputText" name="credit_limit" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <span class="floating-label">GST: <span style="color:red">*</span> </span>
+                        <input type="number" step="any" class="form-control inputText" name="gst" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group"> 
+                        <span class="floating-label">TDS: <span style="color:red">*</span> </span>
+                        <input type="number" step="any" class="form-control inputText" name="tds" required>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="row justify-content-center">
+                  <button type="submit" class="btn  btn-primary btn-sm">Submit</button>
+                </div>
+              </div>
+
+
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+    <div class="card-body">
+
+
+  <table id="example" class="display" style="width:100%">
+                                
+    <thead>
+      <tr>
+        <th style="text-align:center">SL No.</th>
+        <th style="text-align:center">CRM Name</th>
+        <th style="text-align:center">CRM Number</th>
+        <th style="text-align:center;width:180px">Action</th>
+
+    
+      </tr>
+    </thead>
+    <tbody style="text-align: center;">
+      {% for dt in crm %}
+      <tr>
+        <td style="text-align:center">{{forloop.counter}}</td>
+        <td style="text-align:center">{{dt.crm_name}}</td>
+        <td style="text-align:center">{{dt.crm_number }}</td>
+        <td style="text-align:center">
+            <form action="/crm_delete/{{ dt.id }}" method="POST">
+            {% csrf_token %}
+            <a href="/crm_edit/{{ dt.id }}" class="btn btn-primary btn-sm" style="color:white"> <i class="fa fa-edit" style="color:white;"></i></a>
+            <button type="submit" class="btn btn-danger  btn-sm show_confirm" data-toggle="tooltip" title='Delete'> <i class="fa fa-trash" style="color:white;"></i></button>
+        </form>
+
+
+
+        
+    </td>
+      </tr>
+
+      <!-- <div class="modal fade" id="editmodal{{ dt.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-slideout" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel"><label>EDIT CRM ({{ dt.crm_name }})</label>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" style="font-size:18px">×</span>
+              </button>
+            </h4>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="/crm_edit/{{ dt.id }}">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <span class="floating-label">CRM Name<span style="color:red">*</span></span><br>
+                    <input type="text" class="form-control inputText" name="crm_name" value="{{ dt.crm_name }}" />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <span class="floating-label">CRM Number</span><br>
+                    <input type="text" class="form-control inputText" name="crm_number" value="{{ dt.crm_number }}" required />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Country</label>
+                    <select class="form-control" name="country" style="width: 100%;" required>
+                      <option value="{{ dt.country }}">{{ dt.country }}</option>
+                      {% for dt5 in country %}
+                      <option value="{{dt5.id}}">{{dt5.country_name}}</option>
+                      {% endfor %}
+                      </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <label>Payment Mode<span style="color:red">*</span> </label>
+                      <select name="payment_mode" style="width: 100%;" required>
+                      <option vaue="" selected disabled>--Select Payment Modes--</option>
+                      {% for dt in payment_mode %}
+                      <option value="{{dt.id}}">{{dt.payment_mode}}</option>
+                      {% endfor %}
+                      </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <label>Payment Type: <span style="color:red">*</span> </label>
+                      <select style="width: 100%;" name="payment_type" required>
+                      <option vaue="" selected disabled>--Select Payment Types--</option>
+                      {% for dt1 in payment_type %}
+                      <option value="{{dt1.id}}">{{dt1.payment_type}}</option>
+                      {% endfor %}
+                      </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <label>Currency: <span style="color:red">*</span> </label>
+                      <select style="width: 100%;" name="currency" required>
+                      <option vaue="" selected disabled>--Select Currency--</option>
+                      {% for dt2 in currency %}
+                      <option value="{{dt2.id}}">{{dt2.currency}}</option>
+                      {% endfor %}
+                      </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <label>Company: <span style="color:red">*</span> </label>
+                      <select style="width: 100%;" name="company" required>
+                      <option vaue="" selected disabled>--Select Company--</option>
+                      {% for dt3 in company %}
+                      <option value="{{dt3.id}}">{{dt3.payroll}}</option>
+                      {% endfor %}
+                      </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <label>Payment To Bank: <span style="color:red">*</span> </label>
+                      <select style="width: 100%;" name="bank" required>
+                      <option vaue="" selected disabled>--Select Bank--</option>
+                      {% for dt4 in bank %}
+                      <option value="{{dt4.id}}">{{dt4.payment_to_bank}}</option>
+                      {% endfor %}
+                      </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <span class="floating-label">Mobile Number: <span style="color:red">*</span> </span>
+                      <input type="number" class="form-control inputText" name="mobile" required>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <span class="floating-label">Contact Email: <span style="color:red">*</span> </span>
+                      <input type="email" class="form-control inputText" name="contact_email" required>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <span class="floating-label">Invoice Email: <span style="color:red">*</span> </span>
+                      <input type="email" class="form-control inputText" name="inv_email" required>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <span class="floating-label">Per Word Rate (Mother): <span style="color:red">*</span> </span>
+                      <input type="number" step="any" class="form-control inputText" name="per_word_rate_inr" required>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <span class="floating-label">Per Word Rate (INR): <span style="color:red">*</span> </span>
+                      <input type="number" step="any" class="form-control inputText" name="per_word_rate_mother" required>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <span class="floating-label">Credit Limit: <span style="color:red">*</span> </span>
+                      <input type="number" step="any" class="form-control inputText" name="credit_limit" required>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <span class="floating-label">GST: <span style="color:red">*</span> </span>
+                      <input type="number" step="any" class="form-control inputText" name="gst" required>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group"> 
+                      <span class="floating-label">TDS: <span style="color:red">*</span> </span>
+                      <input type="number" step="any" class="form-control inputText" name="tds" required>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="row justify-content-center">
+                <button type="submit" class="btn  btn-primary btn-sm">Submit</button>
+              </div>
+            </div>
+
+
+          </form>
+
+
+        </div>
+      </div>
+    </div> -->
+    {% endfor %}
+   </table>
+
+
+
+  
+
+</div>
+</div>
+{% for message in messages %}
+
+{% if 'success' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': true,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '3000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.success('Data Submitted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+
+        {% elif 'error' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.error('Data Deleted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+          
+         {% elif 'info' == message.tags %}
+
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.info('Data Updated Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+        {% endif %}
+  
+        {% endfor %}
+
+        <script>
+            $("select").select2({
+              tags: "true",
+              // allowClear: true
+              dropdownParent:$('#exampleModal2'),
+            });
+            </script>
+
+</script>
+
+</section>
+  {% endblock %}

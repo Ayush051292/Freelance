@@ -1,0 +1,180 @@
+{% extends 'reportpage.html' %}
+{% block content %}
+
+
+<style>
+  *{
+    font-size: 12px;;
+  }
+</style>
+
+<style>
+
+  th {
+    position: sticky;
+    top: -18px;
+    background: rgb(32, 28, 28);
+     
+  }
+  .heading {
+    position: sticky;
+    top: 95px;
+     
+  }
+      </style>
+
+<section>
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-6">
+          <h4 style="text-align:center">ORGANIZATION-WISE JOB DETAILS REPORT ({{ search_mon_year }})</h4><br>
+          
+        </div>
+        <div class="col-md-3 text-right">
+          <a class="btn btn-info btn-sm"  href="/jobindex" style="color:white">Job Details</a>
+          
+        </div>
+      </div>
+      <br>
+
+      <form action="/job_report_search/" method="POST">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-4">
+
+          </div>
+          <div class="col-md-4">
+            <select class="select2" name="mon" style="width: 80%">
+              <option value="" selected disabled>---Select Month---</option>
+              {% for m in months %}
+                <option value="{{m.month}}">{{ m.month }}</option>
+              {% endfor %}
+          </select>
+
+          
+          &nbsp;
+          <span>
+            <button class="btn btn-primary btn-sm" style="color:white"> Search</button> 
+
+          </span>
+          </div>
+          <div class="col-md-4">
+            
+          </div>
+        </div>
+      </form>
+    <div class="card-body">
+
+      
+        <table id="example1" style="width:100%" class="table table-bordered table-striped" >
+  
+    <thead>
+      <tr style="background-color: rgb(2, 44, 28);">
+        <th style="text-align:center; background-color: #142d4c; color:white;">Organization</th>
+        <th style="text-align:center; background-color: #142d4c; color:white;">Total CRM</th>
+        <th style="text-align:center; background-color: #142d4c; color:white;">Total Words</th>
+        <th style="text-align:center; background-color: #142d4c; color:white;">Total Value (INR)</th>
+
+
+    
+      </tr>
+    </thead>
+    <tbody style="text-align: center;">
+        <tr>
+        <td style="text-align:center;"><strong>Royal Research</strong></td>
+        <td style="text-align:center;"><strong>{{ total_crm_count }}</strong></td>
+        <td style="text-align:center;"><strong>{{ total_words }}</strong></td>
+        <td style="text-align:center;"><strong>{{ total_values }}</strong></td>
+
+
+      </tr>
+    </tbody>
+
+    </table>
+    
+     
+
+</div>
+</div>
+
+
+
+</section>
+
+<section>
+
+  <div class="card">
+      <div class="card-header">
+          <div class="col-md-12"> 
+              <h4 style="text-align:center">CRM-WISE JOB DETAILS REPORT({{ search_mon_year }})
+
+
+            </h4>
+
+          </div>
+      <div class="card-body">
+  
+          <table id="example1" style="width:100%" class="table table-bordered table-striped" >
+    
+      <thead>
+        <tr style="background-color: rgb(2, 44, 28);">
+          <th style="text-align:center; background-color: #142d4c; color:white;">SL No.</th>
+          <th style="text-align:center; background-color: #142d4c; color:white;">CRM</th>
+          <th style="text-align:center; background-color: #142d4c; color:white;">Total Words</th>
+          <th style="text-align:center; background-color: #142d4c; color:white;">Total Value (INR)</th> 
+  
+      
+        </tr>
+      </thead>
+
+      <tbody style="text-align: center;">
+          {%for data in final_data %}
+
+
+
+          <tr>
+          <td style="text-align:center;color: #0c005a;"><strong>{{ forloop.counter }}</strong></td>
+          <td style="text-align:center;"><strong>{{ data.crm_name }}</strong></td>
+          <td style="text-align:center;"><strong>{{ data.crm_word }}</strong></td>
+          <td style="text-align:center;"><strong>{{ data.total_values }}</strong></td>
+  
+  
+        </tr>
+        {% endfor %}
+        <tr>
+            <td style="text-align:center; color: #0c005a;"><strong>Total</strong></td>
+            <td style="text-align:center; color: #0c005a;"><strong>---</strong></td>
+            <td style="text-align:center; color: #0c005a;"><strong>{{ total_words }}</strong></td>
+            <td style="text-align:center; color: #0c005a;"><strong>{{ total_values }}</strong></td>
+    
+    
+          </tr>
+      </tbody>
+       
+      </table>
+      
+       
+  
+  </div>
+  </div>
+  
+  
+  </section>
+
+
+  <script>
+		$("select").select2({
+		  tags: "true",
+		  // placeholder: "Select an option",
+		  allowClear: true
+		});
+	  </script>
+
+
+
+  {% endblock %}

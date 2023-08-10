@@ -1,0 +1,260 @@
+{% extends 'master.html' %}
+{% block content %}
+
+
+<section>
+  <div class="card">
+    <div class="card-header">
+                       
+          
+          <div class="row">
+        <div class="col-md-4"> <h4>Payment Modes</h4></div>
+              <div class="col-md-4"></div>
+              <div class="col-md-4 text-right">
+                  <a class="btn btn-primary btn-sm"  role="button" data-toggle="modal" data-target="#exampleModal3" style="color:white">+ Add New</a>
+
+              </div>
+
+          </div>
+    <div class="card-body">
+
+
+  <table id="example" class="display" style="width:100%">
+                                
+    <thead>
+      <tr>
+        <th style="text-align:center">SL No.</th>
+        <th style="text-align:center">Payment Mode</th>
+        <th style="text-align:center">Action</th>
+
+    
+      </tr>
+    </thead>
+    <tbody style="text-align: center;">
+      {% for x in paymodes %}
+      <tr>
+        <td style="text-align:center">{{ forloop.counter }}</td>
+        <td style="text-align:center">{{ x.payment_mode }}</td>
+        <td style="text-align:center">
+          
+
+          <form action="/paymode_delete/{{ x.id }}" method="POST">
+            {% csrf_token %}
+            <a href="/paymode_update/{{ x.id }}" class="btn btn-primary btn-sm"  role="button" data-toggle="modal" data-target="#editmodal{{ x.id }}" style="color:white" onclick="func1(this.id)"> <i class="fa fa-edit" style="color:white;"></i></a>
+            <button type="submit" class="btn btn-danger  btn-sm show_confirm" data-toggle="tooltip" title='Delete'> <i class="fa fa-trash" style="color:white;"></i></button>
+        </form>
+
+      </tr>
+
+      <div class="modal fade" id="editmodal{{ x.id }}" tabindex="-1" role="dialog" aria-labelledby="editmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-slideout modal-md" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="editmodalLabel">Edit Payment Mode
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+              </h4>
+            </div>
+            <div class="modal-body">
+    
+                <div class="card-body">
+                  <form method = "POST" action="/paymode_update/{{ x.id }}">
+                    {% csrf_token %}
+                  <div class="card-body">
+                      <div  class='form-group'>
+                        <label  class="floating-label">Payment Type</label><br>
+                        <input type="text" name="payment_mode" value="{{ x.payment_mode }}" class="form-control" required>
+                  </div>
+         
+                 
+                          <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <br>
+                              <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                        </div>
+                  </div>
+                  </form>
+                  </div>
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+   </table>
+
+   <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-slideout modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">Add Payment Mode
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+          </h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="card-body">
+              <form  method="POST">
+                {% csrf_token %}
+                  <div  class='form-group'>
+                    <label class="floating-label">Payment Mode</label><br>
+                    <input type="text" name="payment_mode" class="form-control inputText" required>
+              </div>
+     
+             
+                      <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                        <br>
+                          <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                    </div>
+              </div>
+              </form>
+              </div>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  
+
+</div>
+</div>
+
+{% for message in messages %}
+
+{% if 'success' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': true,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '3000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.success('Data Submitted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+
+        {% elif 'error' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.error('Data Deleted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+          
+         {% elif 'info' == message.tags %}
+
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.info('Data Updated Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+        {% endif %}
+  
+        {% endfor %}
+
+</section>
+  {% endblock %}
