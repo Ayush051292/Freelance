@@ -1,0 +1,242 @@
+{% extends 'master.html' %}
+{% block content %}
+
+
+<section>
+  <div class="card">
+    <div class="card-header">
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Edit Company Details</h4>
+        </div>
+        <div class="col-md-4"></div>
+
+      </div>
+      <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+
+            <div class="col-md-6">
+              <div class="card-body">
+                <div class='form-group'>
+                  <label>Company Name:<span style="color:red">*</span></label>
+                  <input type="text" name="payroll" class="form-control" placeholder="Company Name" value="{{ companies.payroll }}" required>
+                </div>
+
+                <div class='form-group'>
+                  <label>Email<span style="color:red">*</span></label><br>
+                  <input type="text" name="email" class="form-control" placeholder="Email" value="{{ companies.email }}">
+                </div>
+
+
+                <div class='form-group'>
+                  <label>PAN of Deductor:<span style="color:red">*</span></label>
+                  <input type="text" name="pandeduct" class="form-control" placeholder="PAN of the Deductor" value="{{ companies.pandeduct }}">
+                </div>
+                <div class='form-group'>
+                  <label>GST Number:<span style="color:red">*</span></label>
+                  <input type="text" name="gstn" class="form-control" placeholder="GSTN" value="{{ companies.gstn }}">
+                </div>
+
+                <div class='form-group'>
+                  <label>Maximum No. of CRM:<span style="color:red">*</span></label>
+                  <input type="number" name="max_crm" class="form-control" placeholder="Maximum no. of CRM" value="{{ companies.max_crm }}">
+                </div>
+
+                <div class='form-group'>
+                  <label>Company Logo:<span style="color:red">*</span></label>
+                  <input type="file" name="clogo" class="form-control">
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card-body">
+                  <div class='form-group'>
+                    <label>Address:<span style="color:red">*</span></label>
+                    <input type="text" name="address" class="form-control" placeholder="Enter Address" value="{{ companies.address }}">
+                  </div>
+
+                  <div class='form-group'>
+                    <label>Phone:<span style="color:red">*</span></label>
+                    <input type="text" name="phone" class="form-control" placeholder="Enter Address" value="{{ companies.phone }}">
+                  </div>
+
+
+                  <div class='form-group'>
+                    <label>TAN of Deductor:<span style="color:red">*</span></label>
+                    <input type="text" name="tandeduct" class="form-control" placeholder="TAN of the Deductor" value="{{ companies.tandeduct }}">
+                  </div>
+
+                  <div class='form-group'>
+                    <label>Registration No:<span style="color:red">*</span></label>
+                    <input type="text" name="regno" class="form-control" placeholder="Registration No" value="{{ companies.regno }}">
+                  </div>
+
+                  <div class='form-group'>
+                    <label>Trade License:<span style="color:red">*</span></label>
+                    <input type="text" name="trade_license" class="form-control" placeholder="Trade License" value="{{ companies.trade_license }}">
+                  </div>
+
+                  <div class='form-group'>
+                    <label>Maximum No. of Employee:<span style="color:red">*</span></label>
+                    <input type="number" name="max_emp" class="form-control" placeholder="Maximum no. of employee" value="{{ companies.max_crm }}">
+                  </div>
+
+                 
+
+                </div>
+
+            </div>
+
+
+
+          </div>
+
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+          </div>
+        </form>
+
+
+
+
+      </div>
+    </div>
+    
+    {% for message in messages %}
+
+{% if 'success' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': true,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '3000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.success('Data Submitted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+
+        {% elif 'error' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.error('Data Deleted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+          
+         {% elif 'info' == message.tags %}
+
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.info('Data Updated Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+        {% endif %}
+  
+        {% endfor %}
+</section>
+{% endblock %}

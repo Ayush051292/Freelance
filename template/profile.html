@@ -1,0 +1,853 @@
+{% extends 'master.html' %}
+{% block content %}
+
+{% load static %}
+
+
+
+<style type="text/css">
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid transparent;
+    border-radius: .25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+}
+.me-2 {
+    margin-right: .5rem!important;
+}
+
+.inputText{
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}
+    </style>
+
+<div class="container">
+<div class="main-body">
+<div class="row">
+<div class="col-lg-5">
+<div class="card">
+<div class="card-body">
+    <a href="#" class="pull-right"  role="button" data-toggle="modal" data-target="#edit_main{{ data.id }}" style="color:#4680ff;font-size: 18px;"> 
+      <span style="color: #4680ff; cursor: none; font-size: 16px;">{{ all_fill }}&#x2f;{{ all_total }}</span>
+      
+      {% if main == 0 %}
+        <i class="fa fa-check-circle" style="color: green; cursor: none; font-size: 18px;"></i>
+        {% else %}
+        <i class="fa fa-exclamation-circle" style="color: #dc3545; cursor: none; font-size: 18px;"></i>
+        
+        {% endif %}
+        <i class="fa fa-edit" style="color:#4680ff;font-size: 18px;"></i></a>
+<div class="d-flex flex-column align-items-center text-center">
+<img src="/mediaa/{{ data.image }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="110" height="110">
+<!-- <img class="img-radius" src="/mediaa/{{ data.image }}"> -->
+<div class="mt-3">
+<h4>{{ data.name }}</h4>
+<!-- <p class="text-secondary mb-1">{{ data.role.name }}</p> -->
+<p class="text-muted font-size-sm"><i class="fa fa-envelope" style="font-weight: bold; color:#007bff;"></i> {{ data.email }}</p>
+<p class="text-muted font-size-sm"><i class="fa fa-phone" style="font-weight: bold; color:#007bff;"></i> {{ data.phone }}</p>
+
+<!-- <button class="btn btn-primary">Follow</button>
+<button class="btn btn-outline-primary">Message</button> -->
+</div>
+</div>
+<hr class="my-4">
+<ul class="list-group list-group-flush">
+
+
+  <li class="list-group-item">
+
+    <div class="row">
+        <div class="col-md-1"><i class="fa fa-user-circle" style="font-size: 18px; color:#007bff;"></i></div>
+        <div class="col-md-4"><h6 class="mb-0"> Role</h6></div>
+        <div class="col-md-7"><span class="text-secondary">{{ data.role.name }}</span></div>
+
+    </div>
+</li>
+
+<li class="list-group-item">
+
+    <div class="row">
+        <div class="col-md-1"><i class="fa fa-graduation-cap" style="font-size: 18px; color:#007bff;"></i></div>
+        <div class="col-md-4"><h6 class="mb-0"> Designation</h6></div>
+        <div class="col-md-7"><span class="text-secondary">{{ data.designation.designation }}</span></div>
+
+    </div>
+</li>
+
+<li class="list-group-item">
+
+    <div class="row">
+        <div class="col-md-1"><i class="fa fa-briefcase" style="font-size: 18px; color:#007bff;"></i></div>
+        <div class="col-md-4"><h6 class="mb-0"> Department</h6></div>
+        <div class="col-md-7"><span class="text-secondary">{{ data.department.payroll }}</span></div>
+
+    </div>
+</li>
+
+<li class="list-group-item">
+
+    <div class="row">
+        <div class="col-md-1"><i class="fa fa-briefcase" style="font-size: 18px; color:#007bff;"></i></div>
+        <div class="col-md-4"><h6 class="mb-0"> Reported-To</h6></div>
+        <div class="col-md-7"><span class="text-secondary">{{ data.reported_to.first_name }} {{ data.reported_to.last_name }}</span></div>
+
+    </div>
+</li>
+
+<li class="list-group-item">
+
+    <div class="row">
+        <div class="col-md-1"><i class="fa fa-map-marker" style="font-size: 18px; color:#007bff;"></i></div>
+        <div class="col-md-4"><h6 class="mb-0"> Location</h6></div>
+        <div class="col-md-7"><span class="text-secondary">{{ data.location.location }}</span></div>
+
+    </div>
+</li>
+
+
+
+<!-- <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+<h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram me-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
+<span class="text-secondary">bootdey</span>
+</li>
+<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+<h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook me-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
+<span class="text-secondary">bootdey</span>
+</li> -->
+</ul>
+</div>
+</div>
+</div>
+<div class="col-lg-4">
+<div class="card">
+    <div class="card-header" style="font-weight: bold; font-size:14px;"> <i class="fas fa-chalkboard-teacher" style=" font-size:14px;"></i> Personal Information
+      
+      <a href="#" class="pull-right"  role="button" data-toggle="modal" data-target="#edit_personal{{ data.id }}" style="color:#4680ff;font-size: 18px;"> 
+       <span style="color: #4680ff; cursor: none; font-size: 16px;">{{ personal_fill }}&#x2f;{{ personal_total }}</span>
+          
+          {% if personal == 0 %}
+            <i class="fa fa-check-circle" style="color: green; cursor: none; font-size: 18px;"></i>
+            {% else %}
+            <i class="fa fa-exclamation-circle" style="color: #dc3545; cursor: none; font-size: 18px;"></i>
+            
+            {% endif %}
+            <i class="fa fa-edit" style="color:#4680ff;font-size: 18px;"></i></a>
+
+    </div>
+<div class="card-body">
+<div class="row mb-3">
+<div class="col-sm-4">
+<h6 class="mb-0">Aadhar No:</h6>
+</div>
+<div class="col-sm-8 text-secondary">{{ data.aadhar }}</div>
+</div>
+<div class="row mb-3">
+<div class="col-sm-4">
+<h6 class="mb-0">PAN No.</h6>
+</div>
+<div class="col-sm-8 text-secondary">{{ data.pan }}</div>
+</div>
+<div class="row mb-3">
+<div class="col-sm-4">
+<h6 class="mb-0">Date Of Birth:</h6>
+</div>
+<div class="col-sm-8 text-secondary">{{ data.dob }}</div>
+
+</div>
+<div class="row mb-3">
+<div class="col-sm-4">
+<h6 class="mb-0">Blood</h6>
+</div>
+<div class="col-sm-8 text-secondary">{{ data.blood }}</div>
+</div>
+<div class="row mb-3">
+<div class="col-sm-4">
+<h6 class="mb-0">Address</h6>
+</div>
+<div class="col-sm-8 text-secondary">{{ data.address }}</div>
+</div>
+
+<!-- <div class="row">
+<div class="col-sm-3"></div>
+<div class="col-sm-9 text-secondary">
+<input type="button" class="btn btn-primary px-4" value="Save Changes">
+</div>
+</div> -->
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div class="card">
+    <div class="card-header" style="font-weight: bold; font-size: 14px;"><i class="fas fa-laptop-code" style="font-size: 14px;"></i> Education Information
+        <a href="#" class="pull-right"  role="button" data-toggle="modal" data-target="#edit_education{{ data.id }}" style="color:#4680ff;font-size: 18px;"> 
+          <span style="color: #4680ff; cursor: none; font-size: 16px;">{{ education_fill }}&#x2f;{{ education_total }}</span>
+
+            {% if education == 0 %}
+            <i class="fa fa-check-circle" style="color: green; cursor: none; font-size: 18px;"></i>
+            {% else %}
+            <i class="fa fa-exclamation-circle" style="color: #dc3545; cursor: none; font-size: 18px;"></i>
+            
+            {% endif %}
+
+
+            <i class="fa fa-edit" style="color:#4680ff;font-size: 18px;"></i></a>
+    </div>
+
+<div class="card-body">
+    
+<div class="row mb-3">
+<div class="col-sm-4">
+<h6 class="mb-0">School:</h6>
+</div>
+<div class="col-sm-8 text-secondary">{{ data.school }}</div>
+</div>
+<div class="row mb-3">
+<div class="col-sm-4">
+<h6 class="mb-0">Degree:</h6>
+</div>
+<div class="col-sm-8 text-secondary">{{ data.degree }}</div>
+</div>
+<div class="row mb-3">
+<div class="col-sm-4">
+<h6 class="mb-0">University:</h6>
+</div>
+<div class="col-sm-8 text-secondary">{{ data.university }}</div>
+</div>
+<div class="row mb-3">
+<div class="col-sm-4">
+<h6 class="mb-0">Subject:</h6>
+</div>
+<div class="col-sm-8 text-secondary">{{ data.subject }}</div>
+</div>
+<div class="row mb-3">
+<div class="col-sm-4">
+<h6 class="mb-0">Marks:</h6>
+</div>
+<div class="col-sm-8 text-secondary">{{ data.marks }}</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="col-lg-3">
+    <div class="card">
+        <div class="card-header" style="font-weight: bold; font-size:14px"><i class="fas fa-building" style=" font-size:14px"></i> Work Information
+            <a href="#" class="pull-right"  role="button" data-toggle="modal" data-target="#edit_work{{ data.id }}" style="color:#4680ff;font-size: 18px;"> 
+              <span style="color: #4680ff; cursor: none; font-size: 16px;">{{ work_fill }}&#x2f;{{ work_total }}</span>
+
+                {% if work == 0 %}
+                <i class="fa fa-check-circle" style="color: green; cursor: none; font-size: 18px;"></i>
+                {% else %}
+                <i class="fa fa-exclamation-circle" style="color: #dc3545; cursor: none; font-size: 18px;"></i>
+                
+                {% endif %}
+
+
+                <i class="fa fa-edit" style="color:#4680ff;font-size: 18px;"></i></a>
+        </div>
+    <div class="card-body">
+    <div class="row mb-3">
+    <div class="col-sm-4">
+    <h6 class="mb-0">Date Of Joining:</h6>
+    </div>
+    <div class="col-sm-8 text-secondary">{{ data.doj }}</div>
+    </div>
+    <div class="row mb-3">
+    <div class="col-sm-4">
+    <h6 class="mb-0">Salary:</h6>
+    </div>
+    <div class="col-sm-8 text-secondary">{{ data.salary }}</div>
+    </div>
+    <div class="row mb-3">
+    <div class="col-sm-4">
+    <h6 class="mb-0">Type:</h6>
+    </div>
+    <div class="col-sm-8 text-secondary">{{ data.user_type }}</div>
+    </div>
+    <div class="row mb-3">
+    <div class="col-sm-4">
+    <h6 class="mb-0">Status:</h6>
+    </div>
+    <div class="col-sm-8 text-secondary">
+        {% if  data.status == '1' %}
+            Active
+        {% else %}
+            In-Active
+        {% endif %}
+    </div>
+    </div>
+ 
+
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-12">
+    <div class="card">
+        <div class="card-header" style="font-weight: bold; font-size:14px"><i class="fa fa-bank" style="font-size:14px"></i> Bank Information
+            <a href="#" class="pull-right"  role="button" data-toggle="modal" data-target="#edit_bank{{ data.id }}" style="color:#4680ff;font-size: 18px;"> 
+              <span style="color: #4680ff; cursor: none; font-size: 16px;">{{ bank_fill }}&#x2f;{{ bank_total }}</span>
+
+                {% if bank == 0 %}
+                <i class="fa fa-check-circle" style="color: green; cursor: none; font-size: 18px;"></i>
+                {% else %}
+                <i class="fa fa-exclamation-circle" style="color: #dc3545; cursor: none; font-size: 18px;"></i>
+                
+                {% endif %}
+
+                <i class="fa fa-edit" style="color:#4680ff;font-size: 18px;"></i></a>
+        </div>
+
+    <div class="card-body">
+    <div class="row mb-3">
+    <div class="col-sm-4">
+    <h6 class="mb-0">Bank:</h6>
+    </div>
+    <div class="col-sm-8 text-secondary">{{ data.bank }}</div>
+    </div>
+    <div class="row mb-3">
+    <div class="col-sm-4">
+    <h6 class="mb-0">IFSC:</h6>
+    </div>
+    <div class="col-sm-8 text-secondary">{{ data.ifsc }}</div>
+    </div>
+    <div class="row mb-3">
+    <div class="col-sm-4">
+    <h6 class="mb-0">A/C No:</h6>
+    </div>
+    <div class="col-sm-8 text-secondary">{{ data.accno }}</div>
+    </div>
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+<!-- Main Info Modal  -->
+
+<div class="modal fade" id="edit_main{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-slideout modal-md" role="document" style="margin-right:-6px; margin-top:0px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">Edit User Information
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </h4>
+        </div>
+        <div class="modal-body">
+    
+          <div class="card-body">
+            <form method="POST" action="/user_profile_edit/{{ data.id }}/main" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="row">
+                  <div class="col-md-6">
+
+                    <div class='form-group'>
+                        <label class="floating-label">Name:</label><br>
+                        <input type="text" name="name" class="form-control inputText" value="{{ data.name }}">
+                      </div>
+
+
+                    <div class='form-group'>
+                        <label class="floating-label">Designation:</label><br>
+                        <select class="form-control select2" name="designation" style="width: 100%">
+                            <option value="{{ data.designation_id }}">{{ data.designation.designation }}</option>   
+                            {% for dt1 in designation %}
+                              <option value="{{dt1.id}}">{{dt1.designation}}</option>
+                            {% endfor %}
+                        </select>
+                      </div>
+    
+                      <div class='form-group'>
+                        <label class="floating-label">Phone:</label><br>
+                        <input type="number" name="phone" class="form-control inputText" value="{{ data.phone }}">
+                      </div>
+
+                      <div class='form-group'>
+                        <label class="floating-label">Location:</label><br>
+                        <select class="form-control select2" name="location" style="width: 100%">
+                            <option value="{{ data.location_id }}">{{ data.location.location }}</option>                   
+                            {% for dt3 in location %}
+                              <option value="{{dt3.id}}">{{dt3.location}}</option>
+                            {% endfor %}
+                        </select>
+                      </div>
+
+
+                  </div>
+    
+                  <div class="col-md-6">
+                    <div class='form-group'>
+                        <label class="floating-label">Role:</label><br>
+                        <select class="form-control select2" name="role" style="width: 100%">
+                            <option value="{{ data.role_id }}">{{ data.role.name }}</option>                   
+                            {% for dt in role %}
+                              <option value="{{dt.id}}">{{dt.name}}</option>
+                            {% endfor %}
+                        </select>
+                      </div>
+
+                      <div class='form-group'>
+                        <label class="floating-label">Department:</label><br>
+                        <select class="form-control select2" name="department" style="width: 100%">
+                            <option value="{{ data.department_id }}">{{ data.department.payroll }}</option>                   
+                            {% for dt2 in department %}
+                                <option value="{{dt2.id}}">{{dt2.payroll}}</option>
+                            {% endfor %}
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        {% if data.image %}
+                        <span>
+                            <label>Image</label><br>
+                            <input type="text" class="form-control" value="{{data.image}}" readonly style="background-color:transparent;">
+                            <!-- <a download="" href="{{ data.image.url }}">"{{ data.image }}</a> -->
+
+                            
+
+                         </span>
+                         {% else %}
+                         <label>Image</label><br>
+                         <input type="file" class="form-control" name="image" />
+                        {% endif %}
+
+                      </div>
+                      </div>
+              </div>
+    
+    
+    
+              <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <br>
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+              </div>
+          </div>
+          </form>
+        </div>
+    
+      </div>
+    
+    </div>
+    </div>
+
+    
+
+<!-- Personal Information Modal  -->
+
+<div class="modal fade" id="edit_personal{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+<div class="modal-dialog modal-dialog-slideout modal-md" role="document" style="margin-right:-6px; margin-top:0px">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="exampleModalLabel">Edit Personal Information
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </h4>
+    </div>
+    <div class="modal-body">
+
+      <div class="card-body">
+        <form method="POST" action="/user_profile_edit/{{ data.id }}/personal">
+          {% csrf_token %}
+          <div class="row">
+              <div class="col-md-6">
+                <div class='form-group'>
+                    <label class="floating-label">Aadhar No:</label><br>
+                    <input type="text" name="aadhar" class="form-control inputText" value="{{ data.aadhar }}">
+                  </div>
+
+                  <div class='form-group'>
+                    <label class="floating-label">Date Of Birth:</label><br>
+                    <input type="date" name="dob" class="form-control inputText" value="{{ data.dob }}">
+                  </div>
+
+                  <div class='form-group'>
+                    <label class="floating-label">Address:</label><br>
+                    <input type="text" name="address" class="form-control inputText" value="{{ data.address }}">
+                  </div>
+              </div>
+
+              <div class="col-md-6">
+                  <div class='form-group'>
+                    <label class="floating-label">PAN No:</label><br>
+                    <input type="text" name="pan" class="form-control inputText" value="{{ data.pan }}">
+                  </div>
+
+                  <div class='form-group'>
+                    <label class="floating-label">Blood:</label><br>
+                    <input type="text" name="blood" class="form-control inputText" value="{{ data.blood }}">
+                  </div>
+              </div>
+          </div>
+
+
+
+          <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+            <br>
+            <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+          </div>
+      </div>
+      </form>
+    </div>
+
+  </div>
+
+</div>
+</div>
+
+
+<!-- Work Information Modal  -->
+
+<div class="modal fade" id="edit_work{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-slideout modal-md" role="document" style="margin-right:-6px; margin-top:0px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">Edit Work Information
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </h4>
+        </div>
+        <div class="modal-body">
+    
+          <div class="card-body">
+            <form method="POST" action="/user_profile_edit/{{ data.id }}/work">
+              {% csrf_token %}
+              <div class="row">
+                  <div class="col-md-6">
+                    <div class='form-group'>
+                        <label class="floating-label">Date Of Joining:</label><br>
+                        <input type="date" name="doj" class="form-control inputText" value="{{ data.doj }}">
+                      </div>
+    
+
+    
+                      <div class='form-group'>
+                        <label class="floating-label">Type:</label><br>
+                        <input type="text" name="user_type" class="form-control inputText" value="{{ data.user_type }}">
+                      </div>
+                  </div>
+    
+                  <div class="col-md-6">  
+                    <div class='form-group'>
+                        <label class="floating-label">Salary:</label><br>
+                        <input type="text" name="salary" class="form-control inputText" value="{{ data.salary }}">
+                      </div>
+
+                      <div class='form-group'>
+                        <label>Status:</label>
+                        <select class="form-control select2" name="status" style="width: 100%">
+                            <option value="{{ data.status }}">
+                                {% if  data.status == '1' %}
+                                    Active
+                                {% else %}
+                                    In-Active
+                                {% endif %}
+                            </option>                   
+                            <option value="1">Active</option>
+                            <option value="0">In-Active</option>
+                        </select>
+                        <!-- <input type="text" name="salary" class="form-control inputText" value="{{ data.salary }}"> -->
+                      </div>
+                  </div>
+              </div>
+    
+    
+    
+              <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <br>
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+              </div>
+          </div>
+          </form>
+        </div>
+    
+      </div>
+    
+    </div>
+    </div>
+
+
+<!-- Education  Information Modal  -->
+
+<div class="modal fade" id="edit_education{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-slideout modal-md" role="document" style="margin-right:-6px; margin-top:0px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">Edit Education Information
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </h4>
+        </div>
+        <div class="modal-body">
+    
+          <div class="card-body">
+            <form method="POST" action="/user_profile_edit/{{ data.id }}/education">
+              {% csrf_token %}
+              <div class="row">
+                  <div class="col-md-6">
+                    <div class='form-group'>
+                        <label class="floating-label">School:</label><br>
+                        <input type="text" name="school" class="form-control inputText" value="{{ data.school }}">
+                      </div>
+    
+
+    
+                      <div class='form-group'>
+                        <label class="floating-label">University:</label><br>
+                        <input type="text" name="university" class="form-control inputText" value="{{ data.university }}">
+                      </div>
+
+                      <div class='form-group'>
+                        <label class="floating-label">Marks:</label><br>
+                        <input type="text" name="marks" class="form-control inputText" value="{{ data.marks }}">
+                      </div>
+
+
+                  </div>
+    
+                  <div class="col-md-6">  
+                    <div class='form-group'>
+                        <label class="floating-label">Degree:</label><br>
+                        <input type="text" name="degree" class="form-control inputText" value="{{ data.degree }}">
+                      </div>
+
+                      <div class='form-group'>
+                        <label class="floating-label">Subject:</label><br>
+                        <input type="text" name="subject" class="form-control inputText" value="{{ data.subject }}">
+                      </div>
+                  </div>
+              </div>
+    
+    
+    
+              <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <br>
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+              </div>
+          </div>
+          </form>
+        </div>
+    
+      </div>
+    
+    </div>
+    </div>
+
+<!-- Bank  Information Modal  -->
+
+<div class="modal fade" id="edit_bank{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-slideout modal-md" role="document" style="margin-right:-6px; margin-top:0px">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel">Edit Bank Information
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </h4>
+        </div>
+        <div class="modal-body">
+    
+          <div class="card-body">
+            <form method="POST" action="/user_profile_edit/{{ data.id }}/bank">
+              {% csrf_token %}
+              <div class="row">
+                  <div class="col-md-6">
+                    <div class='form-group'>
+                        <label class="floating-label">Bank:</label><br>
+                        <input type="text" name="bank" class="form-control inputText" value="{{ data.bank }}">
+                      </div>
+    
+
+    
+                      <div class='form-group'>
+                        <label class="floating-label">A/C No:</label><br>
+                        <input type="text" name="accno" class="form-control inputText" value="{{ data.accno }}">
+                      </div>
+                  </div>
+    
+                  <div class="col-md-6">  
+                    <div class='form-group'>
+                        <label class="floating-label">IFSC:</label><br>
+                        <input type="text" name="ifsc" class="form-control inputText" value="{{ data.ifsc }}">
+                      </div>
+                  </div>
+              </div>
+    
+    
+    
+              <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                <br>
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+              </div>
+          </div>
+          </form>
+        </div>
+    
+      </div>
+    
+    </div>
+    </div>
+
+
+    {% for message in messages %}
+
+{% if 'success' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': true,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '3000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.success('Profile Submitted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+
+        {% elif 'error' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.error('Profile Deleted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+          
+         {% elif 'info' == message.tags %}
+
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.info('Profile Updated Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+        {% endif %}
+  
+        {% endfor %}
+
+
+
+
+
+
+<script>
+    $('.select2').select2();
+  </script>
+{% endblock %}

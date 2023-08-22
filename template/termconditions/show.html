@@ -1,0 +1,55 @@
+{% extends 'master.html' %}
+{% block content %}
+
+<section>
+  <div class="card" id="exampleModal2">
+    <div class="card-header">
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Show Common Terms & Conditions</h4>
+        </div>
+        <div class="col-md-4"></div>
+
+      </div>
+      <div class="card-body">
+          {% csrf_token %}
+          <div class="row">
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Type</label>
+                    <input type="text" class="form-control inputText" name="type" value="{{ form.type }}" readonly style="background-color: transparent;">
+                  </div>
+                  </div>
+                  <div class="col-md-6">
+
+                <div class="form-group"> 
+                    <label>Subject</label>
+                    <input type="text"class="form-control inputText" name="subject" value="{{ form.subject }}" readonly style="background-color: transparent;">
+                </div>
+
+
+              </div>
+
+
+
+      </div>
+      <div class="row">
+        <div class="card-body">
+
+        <div class="form-group">
+          <div class="form-group"> 
+            <label>Content</label><br>
+            <textarea name="" id="" cols="190" rows="190" style="border: none;" readonly>{{ form.content|striptags }}</textarea>
+        </div>
+
+    </div>
+        </div>
+      </div>
+    </div>
+   
+  
+</section>
+{% endblock %}

@@ -1,0 +1,185 @@
+{% extends 'master.html' %}
+{% block content %}
+
+
+<section>
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Announcement Details</h4>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-right">
+                    <a class="btn btn-primary btn-sm" href="/announcement_create" style="color:white">+ Add New</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="example" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center; width: 20px;">SL No.</th>
+                            <th style="text-align:center; width: 150px;">Subject</th>
+                            <th style="text-align:center; width: 80px;">Department</th>
+                            <th style="text-align:center; width: 400px;">Description</th>
+                            <th style="text-align:center; width: 150px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: center;">
+                        {% for mon in announcements %}
+                        <tr>
+                            <td style="text-align:center; width: 20px;">{{ forloop.counter }}</td>
+                            <td style="text-align:center; width: 150px;">{{ mon.subject }}</td>
+                            <td style="text-align:center; width: 80px;">{{ mon.department }}</td>
+                            <td style="text-align:center; width: 400px;">{{ mon.description | striptags | safe }}</td>
+                            <td style="text-align:center; width: 150px;">
+                                <form action="/announcement_delete/{{ mon.id }}" method="POST">
+                                    {% csrf_token %}
+                                    <a href="/announcement_show/{{ mon.id }}" class="btn btn-info btn-sm"  role="button" style="color:white"> <i class="fa fa-eye" style="color:white;"></i></a>
+                                    <a href="/announcement_edit/{{ mon.id }}" class="btn btn-primary btn-sm" style="color:white"> <i class="fa fa-edit" style="color:white;"></i></a>
+                                    <button type="submit" class="btn btn-danger  btn-sm show_confirm" data-toggle="tooltip" title='Delete'> <i class="fa fa-trash" style="color:white;"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+            </div>
+        </div>
+        {% for message in messages %}
+
+{% if 'success' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': true,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '3000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.success('Data Submitted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+
+        {% elif 'error' == message.tags %}
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.error('Data Deleted Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+          
+         {% elif 'info' == message.tags %}
+
+        <script type="text/javascript">
+          // Default Configuration
+              $(document).ready(function() {
+                  toastr.options = {
+                      'closeButton': true,
+                      'debug': false,
+                      'newestOnTop': false,
+                      'progressBar': false,
+                      'positionClass': 'toast-top-right',
+                      'preventDuplicates': false,
+                      'showDuration': '1000',
+                      'hideDuration': '1000',
+                      'timeOut': '5000',
+                      'extendedTimeOut': '1000',
+                      'showEasing': 'swing',
+                      'hideEasing': 'linear',
+                      'showMethod': 'fadeIn',
+                      'hideMethod': 'fadeOut',
+                  }
+              });
+      
+          // Toast Type
+           
+                  toastr.info('Data Updated Successfully');
+             
+          // Toast Image and Progress Bar
+              $('#image').click(function(event) {
+                  toastr.options.progressBar = true,
+                  toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+              });
+      
+      
+          // Toast Position
+              $('#position').click(function(event) {
+                  var pos = $('input[name=position]:checked', '#positionForm').val();
+                  toastr.options.positionClass = "toast-" + pos;
+                  toastr.options.preventDuplicates = false;
+                  toastr.info('This sample position', 'Toast Position')
+              });
+          </script>
+        {% endif %}
+  
+        {% endfor %}
+</section>
+
+
+
+</section>
+
+{% endblock %}

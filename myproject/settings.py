@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-62^rx&n-@e9(!_0%3kn^$6kj0w@@ts67@hoiebdhy$r#p8)(%c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*','digireachlearning.co.in']
 
 
 # Application definition
@@ -38,8 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
-    'freelance'
+    'freelance',
+    'mathfilters',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
+
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,7 +63,7 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, os.path.join('templates')],
+        'DIRS': ['/home/digireachlearning.co.in/public_html/myproject/template/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,14 +83,14 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+  'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'newdb',
         'USER': 'root',
-        'PASSWORD': '',
-        'HOST':'localhost',
-        'PORT':'3306',
-    }
+        'PASSWORD': 'rcrs#2022',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        }
 }
 
 
@@ -111,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Kolkata'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -122,12 +129,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT ='/home/digireachlearning.co.in/public_html/myproject/myapp/static/'
 
 MEDIA_URL = 'mediaa/'
-MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_ROOT='/home/digireachlearning.co.in/public_html/myproject/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+CKEDITOR_CONFIGS = {
+    'default':{
+        'toolbar': 'full',
+        'width': 'full', 
+    }
+}
+
+
+
 

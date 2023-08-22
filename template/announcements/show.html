@@ -1,0 +1,211 @@
+{% extends 'master.html' %}
+{% block content %}
+
+
+<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script> -->
+
+
+<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+
+<style>
+  .django-ckeditor-widget{
+  width: 100%;
+}
+</style>
+<section>
+  <div class="card">
+    <div class="card-header">
+
+
+      <div class="row">
+        <div class="col-md-4">
+          <h4>Showing Announcement</h4>
+        </div>
+        <div class="col-md-4"></div>
+
+
+      </div>
+      <div class="card-body" id="sample">
+            <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Department</label>
+                            <input type="text"class="form-control inputText" name="department" value="{{ announcements.department }}" readonly/>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group"> 
+                            <label>Subject</label>
+                            <input type="text"class="form-control inputText" name="subject" value="{{ announcements.subject }}" readonly/>
+                        </div>
+                    </div>
+            </div>
+            <br>
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group"> 
+            <label>Description:</label> <br>
+            <div class="card-body" style="background-color: rgb(225, 239, 248);"> 
+            {{ announcements.description | safe }}
+            </div>
+            <!-- <textarea cols="300" rows="100" style="border: none;" value="{{ announcements.description }}" readonly>{{ announcements.description | striptags | safe }}</textarea> -->
+          </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+    {% for message in messages %}
+
+    {% if 'success' == message.tags %}
+            <script type="text/javascript">
+              // Default Configuration
+                  $(document).ready(function() {
+                      toastr.options = {
+                          'closeButton': true,
+                          'debug': false,
+                          'newestOnTop': false,
+                          'progressBar': true,
+                          'positionClass': 'toast-top-right',
+                          'preventDuplicates': false,
+                          'showDuration': '1000',
+                          'hideDuration': '1000',
+                          'timeOut': '3000',
+                          'extendedTimeOut': '1000',
+                          'showEasing': 'swing',
+                          'hideEasing': 'linear',
+                          'showMethod': 'fadeIn',
+                          'hideMethod': 'fadeOut',
+                      }
+                  });
+          
+              // Toast Type
+               
+                      toastr.success('Data Submitted Successfully');
+                 
+              // Toast Image and Progress Bar
+                  $('#image').click(function(event) {
+                      toastr.options.progressBar = true,
+                      toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+                  });
+          
+          
+              // Toast Position
+                  $('#position').click(function(event) {
+                      var pos = $('input[name=position]:checked', '#positionForm').val();
+                      toastr.options.positionClass = "toast-" + pos;
+                      toastr.options.preventDuplicates = false;
+                      toastr.info('This sample position', 'Toast Position')
+                  });
+              </script>
+    
+            {% elif 'error' == message.tags %}
+            <script type="text/javascript">
+              // Default Configuration
+                  $(document).ready(function() {
+                      toastr.options = {
+                          'closeButton': true,
+                          'debug': false,
+                          'newestOnTop': false,
+                          'progressBar': false,
+                          'positionClass': 'toast-top-right',
+                          'preventDuplicates': false,
+                          'showDuration': '1000',
+                          'hideDuration': '1000',
+                          'timeOut': '5000',
+                          'extendedTimeOut': '1000',
+                          'showEasing': 'swing',
+                          'hideEasing': 'linear',
+                          'showMethod': 'fadeIn',
+                          'hideMethod': 'fadeOut',
+                      }
+                  });
+          
+              // Toast Type
+               
+                      toastr.error('Data Deleted Successfully');
+                 
+              // Toast Image and Progress Bar
+                  $('#image').click(function(event) {
+                      toastr.options.progressBar = true,
+                      toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+                  });
+          
+          
+              // Toast Position
+                  $('#position').click(function(event) {
+                      var pos = $('input[name=position]:checked', '#positionForm').val();
+                      toastr.options.positionClass = "toast-" + pos;
+                      toastr.options.preventDuplicates = false;
+                      toastr.info('This sample position', 'Toast Position')
+                  });
+              </script>
+              
+             {% elif 'info' == message.tags %}
+    
+            <script type="text/javascript">
+              // Default Configuration
+                  $(document).ready(function() {
+                      toastr.options = {
+                          'closeButton': true,
+                          'debug': false,
+                          'newestOnTop': false,
+                          'progressBar': false,
+                          'positionClass': 'toast-top-right',
+                          'preventDuplicates': false,
+                          'showDuration': '1000',
+                          'hideDuration': '1000',
+                          'timeOut': '5000',
+                          'extendedTimeOut': '1000',
+                          'showEasing': 'swing',
+                          'hideEasing': 'linear',
+                          'showMethod': 'fadeIn',
+                          'hideMethod': 'fadeOut',
+                      }
+                  });
+          
+              // Toast Type
+               
+                      toastr.info('Data Updated Successfully');
+                 
+              // Toast Image and Progress Bar
+                  $('#image').click(function(event) {
+                      toastr.options.progressBar = true,
+                      toastr.info('<img src="https://image.flaticon.com/icons/svg/34/34579.svg" style="width:150px;">', 'Toast Image')
+                  });
+          
+          
+              // Toast Position
+                  $('#position').click(function(event) {
+                      var pos = $('input[name=position]:checked', '#positionForm').val();
+                      toastr.options.positionClass = "toast-" + pos;
+                      toastr.options.preventDuplicates = false;
+                      toastr.info('This sample position', 'Toast Position')
+                  });
+              </script>
+            {% endif %}
+      
+            {% endfor %}
+            
+</section>
+
+<!-- <script>
+  $("select").select2({
+    tags: "true",
+    dropdownParent: $('#sample'),
+  });
+</script> -->
+
+<script>
+  $('.select2').select2();
+</script>
+
+
+
+{% endblock %}
